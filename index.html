@@ -16,14 +16,35 @@
 
         <header>
             <h1>Library</h1>
-            <button class="addBtn">Add Book</button>
+            <button class="newBookBtn">New Book</button>
         </header>
 
         <div id="books">
-            
+
         </div>
 
+        <form action="/" class="addBook">
+            <button class="closeModalBtn">x</button>
+            <div>
+                <label for="bookTitle">TITLE</label>
+                <input type="text" name="bookTitle" id="bookTitle" required>
+            </div>
+
+            <div>
+                <label for="bookAuthor">AUTHOR</label>
+                <input type="text" name="bookAuthor" id="bookAuthor" required>
+            </div>
+
+            <div>
+                <label for="bookPages">PAGES</label>
+                <input type="number" name="bookPages" id="bookPages" required>
+            </div>
+
+            <button type="submit" class="addBookBtn">Add Book</button>
+        </form>
+
     </div>
+
 </body>
 
 </html>

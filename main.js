@@ -1,9 +1,38 @@
 let libArray = [];
 
-const addBtn = document.querySelector(".addBtn");
-const deleteBtn = document.querySelector(".deleteBtn");
-const updateBtn = document.querySelector(".updateBtn");
+const bookTitleInput = document.querySelector("#bookTitle");
+const bookAuthorInput = document.querySelector("#bookAuthor");
+const bookPagesInput = document.querySelector("#bookPages");
+
+const addBookModal = document.querySelector(".addBook");
 const booksContainer = document.querySelector("#books");
+
+const newBookBtn = document.querySelector(".newBookBtn");
+newBookBtn.addEventListener("click", () => {
+  addBookModal.style.display =
+    addBookModal.style.display === "flex" ? "none" : "flex";
+});
+
+const addBookBtn = document.querySelector(".addBookBtn");
+addBookBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  addBook(
+    createId(),
+    bookTitleInput.value,
+    bookAuthorInput.value,
+    bookPagesInput.value
+  );
+  bookTitleInput.value = "";
+  bookAuthorInput.value = "";
+  bookPagesInput.value = "";
+  updateLibrary();
+});
+
+const closeModalBtn = document.querySelector(".closeModalBtn");
+closeModalBtn.addEventListener("click", () => {
+  addBookModal.style.display =
+    addBookModal.style.display === "flex" ? "none" : "flex";
+});
 
 function createId() {
   const chars = [
@@ -29,7 +58,7 @@ function createId() {
   return id;
 }
 
-function Book(id, title, author, pages, read) {
+function Book(id, title, author, pages, read = false) {
   (this.id = id),
     (this.title = title),
     (this.author = author),
@@ -42,6 +71,7 @@ Book.prototype.updateReadStatus = function () {
 };
 
 function addBook(id, title, author, pages, read) {
+  if (!title || !author || !pages) return;
   const book = new Book(id, title, author, pages, read);
   libArray.push(book);
 }
@@ -84,20 +114,20 @@ function updateLibrary() {
     bookPagesDiv.className = "pages";
     bookPagesDiv.textContent = book.pages;
 
-    const bookReadDiv = document.createElement("div");
-    bookReadDiv.className = "read";
-    bookReadDiv.textContent = book.read;
+    // const bookReadDiv = document.createElement("div");
+    // bookReadDiv.className = "read";
+    // bookReadDiv.textContent = book.read;
 
     const bookIdDiv = document.createElement("div");
     bookIdDiv.className = "id";
-    bookIdDiv.textContent = book.id;
+    bookIdDiv.textContent = `id : ${book.id}`;
 
     const buttonsDiv = document.createElement("div");
     buttonsDiv.className = "actions";
 
     const deleteBtn = document.createElement("button");
     deleteBtn.className = "deleteBtn";
-    deleteBtn.textContent = "Delete Book";
+    deleteBtn.textContent = "Delete";
     deleteBtn.addEventListener("click", () => {
       deleteBook(book.id);
     });
@@ -105,6 +135,13 @@ function updateLibrary() {
     const updateBtn = document.createElement("button");
     updateBtn.className = "updateBtn";
     updateBtn.textContent = "Completed";
+    updateBtn.style.backgroundColor = book.read
+      ? "rgb(37, 182, 37)"
+      : "rgb(136, 136, 140)";
+    updateBtn.addEventListener("click", () => {
+      book.updateReadStatus();
+      updateLibrary();
+    });
 
     buttonsDiv.appendChild(deleteBtn);
     buttonsDiv.appendChild(updateBtn);
@@ -112,7 +149,7 @@ function updateLibrary() {
     bookDiv.appendChild(bookTitleDiv);
     bookDiv.appendChild(bookAuthorDiv);
     bookDiv.appendChild(bookPagesDiv);
-    bookDiv.appendChild(bookReadDiv);
+    // bookDiv.appendChild(bookReadDiv);
     bookDiv.appendChild(bookIdDiv);
     bookDiv.appendChild(buttonsDiv);
 
