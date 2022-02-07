@@ -100,7 +100,7 @@ button:hover {
 .addBook {
   position: absolute;
   top: 30%;
-  display: flex;
+  display: none;
   width: 90%;
   height: 50%;
   margin: auto;
