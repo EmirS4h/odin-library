@@ -16,6 +16,9 @@ class Book {
       "a",
       "b",
       "c",
+      "d",
+      "e",
+      "f",
       "1",
       "2",
       "3",
@@ -41,9 +44,9 @@ class Library {
     this.books = [];
   }
 
-  addBook(value) {
-    if (!value) return;
-    this.books.push(value);
+  addBook(book) {
+    if (!book) return;
+    this.books.push(book);
   }
 
   removeBook(bookId) {
@@ -82,15 +85,15 @@ class DisplayController {
 
         const bookTitleDiv = document.createElement("div");
         bookTitleDiv.className = "title";
-        bookTitleDiv.textContent = book.title;
+        bookTitleDiv.textContent = `Title : ${book.title}`;
 
         const bookAuthorDiv = document.createElement("div");
         bookAuthorDiv.className = "author";
-        bookAuthorDiv.textContent = book.author;
+        bookAuthorDiv.textContent = `Author : ${book.author}`;
 
         const bookPagesDiv = document.createElement("div");
         bookPagesDiv.className = "pages";
-        bookPagesDiv.textContent = book.pages;
+        bookPagesDiv.textContent = `Pages : ${book.pages}`;
 
         // const bookReadDiv = document.createElement("div");
         // bookReadDiv.className = "read";
@@ -178,4 +181,10 @@ closeModalBtn.addEventListener("click", (e) => {
 
 const library = new Library();
 const displayController = new DisplayController();
+library.addBook(new Book("EmirBook1","Emir1",211))
+library.addBook(new Book("EmirBook2","Emir2",311))
+library.addBook(new Book("EmirBook3","Emir3",411))
+library.addBook(new Book("EmirBook4","Emir4",511))
+library.addBook(new Book("EmirBook5","Emir5",611))
+library.addBook(new Book("EmirBook6EmirBook6EmirBook6EmirBook6","Emir6",711))
 displayController.updateDisplay(library.getBooks());
